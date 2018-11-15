@@ -24,11 +24,16 @@ public class Usuario {
 	public int cantEspacios;
 	public int cantidadViajes;
 	public List<Viaje> viajes;
+	private List<Usuario> passangers = new List<Usuario>();
 	
 	public Usuario(String nombre, int carne, int tipo) {
 		this.nombre = nombre;
 		this.carne = carne;
 		this.tipo = tipo;
+	}
+	
+	public void addStudent(Usuario user) {
+		passangers.addLast(user);
 	}
 
 	public String getNombre() {

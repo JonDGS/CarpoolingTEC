@@ -37,9 +37,11 @@ public class DriverResource {
 	@GET
 	@Path("/{lookup}")
 	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.TEXT_PLAIN)
 	public String getDriver(@PathParam("lookup") String lookup) {
 		String result = (String) server.getDriverList().searchData(lookup);
+		if(result == (null)) {
+			return "Driver not found";
+		}
 		return result;
 	}
 	

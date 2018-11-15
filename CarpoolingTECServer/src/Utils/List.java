@@ -114,11 +114,11 @@ public class List<T> {
 	
 	public T searchData(T lookup) {
 		int index = 0;
-		while(index < this.length()) {
+		while(index < length()) {
 			if(lookup.equals(getData(index))) {
 				return getData(index);
-			}
-		}return null;
+			}index++;
+		}return (T) null;
 	}
 		
 }

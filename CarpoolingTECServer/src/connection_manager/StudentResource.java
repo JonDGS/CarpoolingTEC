@@ -38,9 +38,11 @@ public class StudentResource {
 	@GET
 	@Path("/{lookup}")
 	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.TEXT_PLAIN)
 	public String getStudent(@PathParam("lookup") String lookup) {
 		String result = (String) server.getStudentList().searchData(lookup);
+		if(result == (null)) {
+			return "Driver not found";
+		}
 		return result;
 	}
 	

@@ -112,13 +112,13 @@ public class List<T> {
 		
 	}
 	
-	public T searchData(T lookup) {
+	public T searchData(String lookup) {
 		int index = 0;
 		while(index < length()) {
 			if(lookup.equals(getData(index))) {
 				return getData(index);
 			}index++;
-		}return (T) null;
+		}return null;
 	}
 		
 }

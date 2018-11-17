@@ -17,9 +17,6 @@ import javax.ws.rs.core.MediaType;
 @ApplicationPath("connect")
 public class Carpooling extends Application {
 	
-	private static List drivers = new List();
-	private static List students = new List();
-	
 	@Override
 	public Set<Class<?>> getClasses(){
 		Set<Class<?>> classes = new HashSet<Class<?>>();

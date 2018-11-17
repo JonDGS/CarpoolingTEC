@@ -30,6 +30,7 @@ public class Usuario {
 		this.nombre = nombre;
 		this.carne = carne;
 		this.tipo = tipo;
+		
 	}
 	
 	public void addStudent(Usuario user) {

@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
 
+import Server.Usuario;
 import Utils.List;
 
 @Path("/student")
@@ -22,28 +23,30 @@ public class StudentResource {
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.TEXT_PLAIN)
-	public String addDriver(String id) {
-		server.addStudent(id);
+	public String addStudent(String id) {
+		Usuario data = new Gson().fromJson(id, Usuario.class);
+		server.addStudent(data);
 		return "Log in successfully";
 	}
 	
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getDrivers() {
-		String drivers = new Gson().toJson(server.getStudents());
-		return drivers;
+	public String getStudents() {
+		String students = new Gson().toJson(server.getStudents());
+		return students;
 	}
 	
 	@GET
 	@Path("/{lookup}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getStudent(@PathParam("lookup") String lookup) {
-		String result = (String) server.getStudentList().searchData(lookup);
+	public String getDriver(@PathParam("lookup") String lookup) {
+		Usuario lookup_aux = new Gson().fromJson(lookup, Usuario.class);
+		Usuario result = server.getDriverList().searchData(lookup_aux);
 		if(result == (null)) {
 			return "Driver not found";
 		}
-		return result;
+		return new Gson().toJson(result);
 	}
 	
 }

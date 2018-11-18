@@ -1,12 +1,14 @@
 package connection_manager;
 
+import Server.Server;
 import Server.Usuario;
 import Utils.List;
 
-public class Database<T> {
+public class Database {
 	
 	private static List<Usuario> drivers = new List<Usuario>();
 	private static List<Usuario> students = new List<Usuario>();
+	private static Server server = new Server();
 	
 	public static List<Usuario> getDriverList() {
 		return drivers;
@@ -54,6 +56,7 @@ public class Database<T> {
 		int index = 0;
 		while(index<drivers.length()) {
 			Usuario result = drivers.getData(index);
+			System.out.println("Comparing " + driver + " to " + result.getNombre());
 			if(driver.equals(result.nombre)) {
 				return result;
 			}index++;
@@ -64,6 +67,7 @@ public class Database<T> {
 		int index = 0;
 		while(index<students.length()) {
 			Usuario result = students.getData(index);
+			System.out.println("Comparing " + student + " to " + result.getNombre());
 			if(student.equals(result.nombre)) {
 				return result;
 			}index++;

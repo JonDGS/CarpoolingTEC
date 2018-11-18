@@ -41,8 +41,7 @@ public class StudentResource {
 	@Path("/{lookup}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getDriver(@PathParam("lookup") String lookup) {
-		Usuario lookup_aux = new Gson().fromJson(lookup, Usuario.class);
-		Usuario result = server.getDriverList().searchData(lookup_aux);
+		Usuario result = server.getDriverList().searchData(lookup);
 		if(result == (null)) {
 			return "Driver not found";
 		}

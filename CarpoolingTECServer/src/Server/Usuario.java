@@ -17,6 +17,7 @@ public class Usuario {
 	 * @param cantidadViajes: sirve para hacer el top 5 de estudiantes
 	 * con más viajes
 	 * @param viajes: un historial de los viajes realizados
+	 * @param
 	 */
 	public String nombre;
 	public int carne;
@@ -24,6 +25,7 @@ public class Usuario {
 	public int cantEspacios;
 	public int cantidadViajes;
 	public List<Viaje> viajes;
+	private boolean busy = false;
 	private List<Usuario> passangers = new List<Usuario>();
 	
 	public Usuario(String nombre, int carne, int tipo) {
@@ -31,6 +33,14 @@ public class Usuario {
 		this.carne = carne;
 		this.tipo = tipo;
 		
+	}
+	
+	public boolean isBusy() {
+		return this.busy;
+	}
+	
+	public void setBusy(boolean status) {
+		this.busy = status;
 	}
 	
 	public void addStudent(Usuario user) {

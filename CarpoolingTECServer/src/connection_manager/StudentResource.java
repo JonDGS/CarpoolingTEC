@@ -17,33 +17,50 @@ import Utils.List;
 public class StudentResource {
 	
 	
-	private Database server = new Database();
+private Database server = new Database();
 	
 	
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.TEXT_PLAIN)
 	public String addStudent(String id) {
-		Usuario data = new Gson().fromJson(id, Usuario.class);
+		String[] metadata = id.split(",");
+		String param1 = metadata[0];
+		String param2 = metadata[1];
+		String param3 = metadata[2];
+		String param4 = metadata[3];
+		Usuario data = new Usuario(param1, Integer.parseInt(param2), Integer.parseInt(param3), Integer.parseInt(param4));
 		server.addStudent(data);
 		return "Log in successfully";
 	}
 	
+	// Save data
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getStudents() {
-		String students = new Gson().toJson(server.getStudents());
-		return students;
+		String drivers = new Gson().toJson(server.getStudents());
+		return drivers;
 	}
 	
 	@GET
 	@Path("/{lookup}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getDriver(@PathParam("lookup") String lookup) {
-		Usuario result = server.getDriverList().searchData(lookup);
+	public String getStudent(@PathParam("lookup") String lookup) {
+		Usuario result = server.isStudent(lookup);
 		if(result == (null)) {
-			return "Driver not found";
+			return "Student not found";
+		}
+		return new Gson().toJson(result);
+	}
+	
+	@GET
+	@Path("/carnet/{lookup}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getCarne(@PathParam("lookup") String lookup) {
+		Usuario result = server.searchByCarne(Integer.parseInt(lookup));
+		if(result == (null)) {
+			return "User not found";
 		}
 		return new Gson().toJson(result);
 	}

@@ -27,7 +27,8 @@ public class DriverResource {
 		String param1 = metadata[0];
 		String param2 = metadata[1];
 		String param3 = metadata[2];
-		Usuario data = new Usuario(param1, Integer.parseInt(param2), Integer.parseInt(param3));
+		String param4 = metadata[4];
+		Usuario data = new Usuario(param1, Integer.parseInt(param2), Integer.parseInt(param3), Integer.parseInt(param4));
 		server.addDriver(data);
 		return "Log in successfully";
 	}

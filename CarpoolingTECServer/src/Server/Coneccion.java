@@ -4,7 +4,7 @@ package Server;
  * Clase que contine la infirmacion de las conecciones
  * en el mapa de grafos con peso y dirigidos
  */
-public class Coneccion<T> {
+public class Coneccion {
 	
 	/*
 	 * @param id: es el nombre de la coneccion
@@ -16,11 +16,11 @@ public class Coneccion<T> {
 	 */
 	
 	public final String id;
-    private final NodoG<T> fuente;
-    private final NodoG<T> destino;
+    private final NodoG fuente;
+    private final NodoG destino;
     private final int peso;
 
-    public Coneccion(String id, NodoG<T> fuente, NodoG<T> destino, int peso) {
+    public Coneccion(String id, NodoG fuente, NodoG destino, int peso) {
         this.id = id;
         this.fuente = fuente;
         this.destino = destino;
@@ -30,11 +30,11 @@ public class Coneccion<T> {
     public String getId() {
         return id;
     }
-    public NodoG<T> getDestino() {
+    public NodoG getDestino() {
         return destino;
     }
 
-    public NodoG<T> getFuente() {
+    public NodoG getFuente() {
         return fuente;
     }
     public int getPeso() {

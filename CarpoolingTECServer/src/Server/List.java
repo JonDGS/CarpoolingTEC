@@ -111,5 +111,10 @@ public class List<T> {
 		}
 		
 	}
+
+	public void reverse() {
+		// TODO Auto-generated method stub
+		
+	}
 		
 }

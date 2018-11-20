@@ -11,13 +11,18 @@ public class Destino {
 	 * @param posiblesConecciones: son las posibles conecciones,
 	 * para despues elegir aleatoriamente las conecciones 
 	 * que se deseen
+	 * @param id: es un numero especifico para identificar
+	 * a las ciudades
+	 * 
 	 */
 	
 	public String nombre;
+	public int id;
 	public List<Destino> posiblesConecciones;
 	
 	
-	public Destino(String nombre) {
+	public Destino(String nombre, int id) {
 		this.nombre = nombre;
+		this.id = id;
 	}
 }

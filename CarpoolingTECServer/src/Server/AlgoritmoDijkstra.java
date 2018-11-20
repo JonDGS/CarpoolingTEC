@@ -5,84 +5,83 @@ package Server;
  * para buscar el camino más corto
  * de un nodoG A a uno B
  */
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class AlgoritmoDijkstra<T> {
+public class AlgoritmoDijkstra {
 	
 
-	private final List<NodoG<T>> nodes;
-    private final List<Coneccion<T>> conecciones;
-    private Set<NodoG<T>> settledNodes;
-    private Set<NodoG<T>> unSettledNodes;
-    private Map<NodoG<T>, NodoG<T>> predecessors;
-    private Map<NodoG<T>, Integer> distance;
+	private final List<NodoG> nodes;
+    private final List<Coneccion> conecciones;
+    private Set<NodoG> settledNodes;
+    private Set<NodoG> unSettledNodes;
+    private Map<NodoG, NodoG> predecessors;
+    private Map<NodoG, Integer> distance;
 
-    public AlgoritmoDijkstra(Grafo<T> graph) {
-        // create a copy of the array so that we can operate on this array
-        this.nodes = new ArrayList<NodoG<T>>(graph.getNodos());
-        this.conecciones = new ArrayList<Coneccion<T>>(graph.getConecciones());
+    public AlgoritmoDijkstra(Grafo mapa) {
+        this.nodes = mapa.getNodos();
+        this.conecciones = mapa.getConecciones();
     }
 
-    public void execute(NodoG<T> source) {
-        settledNodes = new HashSet<NodoG<T>>();
-        unSettledNodes = new HashSet<NodoG<T>>();
-        distance = new HashMap<NodoG<T>, Integer>();
-        predecessors = new HashMap<NodoG<T>, NodoG<T>>();
+    public void execute(NodoG source) {
+        settledNodes = new HashSet<NodoG>();
+        unSettledNodes = new HashSet<NodoG>();
+        distance = new HashMap<NodoG, Integer>();
+        predecessors = new HashMap<NodoG, NodoG>();
         distance.put(source, 0);
         unSettledNodes.add(source);
         while (unSettledNodes.size() > 0) {
-        	NodoG<T> node = getMinimum(unSettledNodes);
+        	NodoG node = getMinimum(unSettledNodes);
             settledNodes.add(node);
             unSettledNodes.remove(node);
             findMinimalDistances(node);
         }
     }
 
-    private void findMinimalDistances(NodoG<T> node) {
-        List<NodoG<T>> adjacentNodes = getNeighbors(node);
-        for (NodoG<T> target : adjacentNodes) {
-            if (getShortestDistance(target) > getShortestDistance(node)
-                    + getDistance(node, target)) {
-                distance.put(target, getShortestDistance(node)
-                        + getDistance(node, target));
-                predecessors.put(target, node);
-                unSettledNodes.add(target);
+    private void findMinimalDistances(NodoG node) {
+        List<NodoG> adjacentNodes = getNeighbors(node);
+        int n = adjacentNodes.length();
+        for(int i = 1; i < (n-1); i++) {
+            if (getShortestDistance(adjacentNodes.getData(i)) > getShortestDistance(node)
+                    + getDistance(node, adjacentNodes.getData(i))) {
+                distance.put(adjacentNodes.getData(i), getShortestDistance(node)
+                        + getDistance(node, adjacentNodes.getData(i)));
+                predecessors.put(adjacentNodes.getData(i), node);
+                unSettledNodes.add(adjacentNodes.getData(i));
             }
         }
 
     }
 
-    private int getDistance(NodoG<T> nodo, NodoG<T> objetivo) {
-        for (Coneccion conec : conecciones) {
-            if (conec.getFuente().equals(nodo)
-                    && conec.getDestino().equals(objetivo)) {
-                return conec.getPeso();
+    private int getDistance(NodoG nodo, NodoG objetivo) {
+    	int n = conecciones.length();
+    	for(int i = 1; i < (n-1); i++) {
+            if (conecciones.getData(i).getFuente().equals(nodo)
+                    && conecciones.getData(i).getDestino().equals(objetivo)) {
+                return conecciones.getData(i).getPeso();
             }
         }
         throw new RuntimeException("Should not happen");
     }
 
-    private List<NodoG<T>> getNeighbors(NodoG<T> node) {
-        List<NodoG<T>> neighbors = new ArrayList<NodoG<T>>();
-        for (Coneccion<T> edge : conecciones) {
-            if (edge.getFuente().equals(node)
-                    && !isSettled(edge.getDestino())) {
-                neighbors.add(edge.getDestino());
+    private List<NodoG> getNeighbors(NodoG node) {
+        List<NodoG> neighbors = new List<NodoG>();
+        int n = neighbors.length();
+        for(int i = 1; i < (n-1); i++) {
+            if (conecciones.getData(i).getFuente().equals(node)
+                    && !isSettled(conecciones.getData(i).getDestino())) {
+                neighbors.addLast(conecciones.getData(i).getDestino());
             }
         }
         return neighbors;
     }
 
-    private NodoG<T> getMinimum(Set<NodoG<T>> nodos) {
-    	NodoG<T> minimum = null;
-        for (NodoG<T> vertex : nodos) {
+	private NodoG getMinimum(Set<NodoG> nodos) {
+    	NodoG minimum = null;
+        for (NodoG vertex : nodos) {
             if (minimum == null) {
                 minimum = vertex;
             } else {
@@ -94,11 +93,11 @@ public class AlgoritmoDijkstra<T> {
         return minimum;
     }
 
-    private boolean isSettled(NodoG<T> nodo) {
+    private boolean isSettled(NodoG nodo) {
         return settledNodes.contains(nodo);
     }
 
-    private int getShortestDistance(NodoG<T> destino) {
+    private int getShortestDistance(NodoG destino) {
         Integer d = distance.get(destino);
         if (d == null) {
             return Integer.MAX_VALUE;
@@ -107,24 +106,18 @@ public class AlgoritmoDijkstra<T> {
         }
     }
 
-    /*
-     * This method returns the path from the source to the selected target and
-     * NULL if no path exists
-     */
-    public LinkedList<NodoG<T>> getPath(NodoG<T> objetivo) {
-        LinkedList<NodoG<T>> path = new LinkedList<NodoG<T>>();
-        NodoG<T> step = objetivo;
-        // check if a path exists
+    public List<NodoG> getPath(NodoG objetivo) {
+        List<NodoG> path = new List<NodoG>();
+        NodoG step = objetivo;
         if (predecessors.get(step) == null) {
             return null;
         }
-        path.add(step);
+        path.addLast(step);
         while (predecessors.get(step) != null) {
             step = predecessors.get(step);
-            path.add(step);
+            path.addLast(step);
         }
-        // Put it into the correct order
-        Collections.reverse(path);
+        path.reverse();
         return path;
     }
 }

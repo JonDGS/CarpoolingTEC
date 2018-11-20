@@ -4,7 +4,7 @@ package Server;
  * Son los nodos de un grafo, la data es el destino
  * que contiene el nodo
  */
-public class NodoG<T> {
+public class NodoG {
 	
 	/*
 	 * @param id: es el nombre del nodo, para facilitar
@@ -50,11 +50,11 @@ public class NodoG<T> {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Coneccion other = (Coneccion) obj;
+        NodoG nuevo = (NodoG) obj;
         if (id == null) {
-            if (other.id != null)
+            if (nuevo.id != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!id.equals(nuevo.id))
             return false;
         return true;
     }

@@ -14,8 +14,17 @@ public class Server {
 	
 	public List<Usuario> listaConductores;
 	public List<Usuario> listaEstudiates;
-	public Grafo<Object> mapa;
+	public Grafo mapa;
 	
 	public Server() {
+		ListDestinosConecciones i = new ListDestinosConecciones();
+		List<NodoG> nodos = i.ListDestinos();
+		List<Coneccion> conecciones = i.listConecciones();
+		
+		//GRAFO
+		this.mapa = new Grafo(nodos,conecciones);
+		
+		
+		
 	}
 }

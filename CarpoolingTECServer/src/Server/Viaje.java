@@ -13,8 +13,8 @@ public class Viaje {
 	 * abordo durante el viaje.
 	 */
 	public Usuario Conductor;
-	public NodoG<Object> inicio;
-	public NodoG<Object> objetivo;
+	public NodoG inicio;
+	public NodoG objetivo;
 	public List<Usuario> listPasajeros;
 	
 	
@@ -24,16 +24,16 @@ public class Viaje {
 	public void setConductor(Usuario conductor) {
 		Conductor = conductor;
 	}
-	public NodoG<Object> getInicio() {
+	public NodoG getInicio() {
 		return inicio;
 	}
-	public void setInicio(NodoG<Object> inicio) {
+	public void setInicio(NodoG inicio) {
 		this.inicio = inicio;
 	}
-	public NodoG<Object> getObjetivo() {
+	public NodoG getObjetivo() {
 		return objetivo;
 	}
-	public void setObjetivo(NodoG<Object> objetivo) {
+	public void setObjetivo(NodoG objetivo) {
 		this.objetivo = objetivo;
 	}
 	public List<Usuario> getListPasajeros() {

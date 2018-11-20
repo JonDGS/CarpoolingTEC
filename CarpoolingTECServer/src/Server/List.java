@@ -112,9 +112,10 @@ public class List<T> {
 		
 	}
 
-	public void reverse() {
-		// TODO Auto-generated method stub
-		
+	public List<T> reverse(List<T> list) {
+		List<T> newlist = new List<T>();
+		newlist.addLast(list.first.data);
+		return list;
 	}
 		
 }

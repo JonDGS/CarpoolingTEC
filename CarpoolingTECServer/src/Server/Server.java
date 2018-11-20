@@ -19,7 +19,7 @@ public class Server {
 	public Server() {
 		ListDestinosConecciones i = new ListDestinosConecciones();
 		List<NodoG> nodos = i.ListDestinos();
-		List<Coneccion> conecciones = i.listConecciones();
+		List<Coneccion> conecciones = i.listConecciones(nodos);
 		
 		//GRAFO
 		this.mapa = new Grafo(nodos,conecciones);

@@ -10,4 +10,6 @@ public class Map2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map2);
     }
+
+
 }

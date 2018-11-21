@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProfileScreen"></activity>
+        <activity android:name=".ProfileScreen" />
+        <activity android:name=".NewTripScreen"></activity>
     </application>
 
 </manifest>

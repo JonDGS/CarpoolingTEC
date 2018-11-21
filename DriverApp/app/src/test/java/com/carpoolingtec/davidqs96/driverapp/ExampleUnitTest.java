@@ -1,4 +1,4 @@
-package tec.datos1.driverapp;
+package com.carpoolingtec.davidqs96.driverapp;
 
 import org.junit.Test;
 

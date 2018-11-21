@@ -1,4 +1,4 @@
-package tec.datos1.driverapp;
+package com.carpoolingtec.davidqs96.driverapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("tec.datos1.driverapp", appContext.getPackageName());
+        assertEquals("com.carpoolingtec.davidqs96.driverapp", appContext.getPackageName());
     }
 }

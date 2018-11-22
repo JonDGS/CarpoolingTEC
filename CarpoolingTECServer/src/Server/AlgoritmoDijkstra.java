@@ -27,6 +27,9 @@ public class AlgoritmoDijkstra {
     }
 
     public void execute(NodoG source) {
+    	System.out.println("---------------AlgoritmoDijkstra---------------");
+    	System.out.println("----El inicio del recorrido sera: "+source.getName()+"-----");
+    	System.out.println("Estableciendo lo necesario para conseguir la menor distancia");
         settledNodes = new HashSet<NodoG>();
         unSettledNodes = new HashSet<NodoG>();
         distance = new HashMap<NodoG, Integer>();
@@ -34,17 +37,20 @@ public class AlgoritmoDijkstra {
         distance.put(source, 0);
         unSettledNodes.add(source);
         while (unSettledNodes.size() > 0) {
+        	System.out.println("Se Buscara Nueva distancia...");
         	NodoG node = getMinimum(unSettledNodes);
             settledNodes.add(node);
             unSettledNodes.remove(node);
             findMinimalDistances(node);
         }
+        System.out.println("--Se ejecuto el algoritmo, se tiene todas las distancias--");
+        System.out.println("---------------AlgoritmoDijkstra---------------");
     }
 
     private void findMinimalDistances(NodoG node) {
         List<NodoG> adjacentNodes = getNeighbors(node);
         int n = adjacentNodes.length();
-        for(int i = 0; i < (n-1); i++) {
+        for(int i = 0; i < n; i++) {
             if (getShortestDistance(adjacentNodes.getData(i)) > getShortestDistance(node)
                     + getDistance(node, adjacentNodes.getData(i))) {
                 distance.put(adjacentNodes.getData(i), getShortestDistance(node)
@@ -53,12 +59,11 @@ public class AlgoritmoDijkstra {
                 unSettledNodes.add(adjacentNodes.getData(i));
             }
         }
-
     }
 
     private int getDistance(NodoG nodo, NodoG objetivo) {
     	int n = conecciones.length();
-    	for(int i = 0; i < (n-1); i++) {
+    	for(int i = 0; i < n; i++) {
             if (conecciones.getData(i).getFuente().equals(nodo)
                     && conecciones.getData(i).getDestino().equals(objetivo)) {
                 return conecciones.getData(i).getPeso();
@@ -69,8 +74,8 @@ public class AlgoritmoDijkstra {
 
     private List<NodoG> getNeighbors(NodoG node) {
         List<NodoG> neighbors = new List<NodoG>();
-        int n = neighbors.length();
-        for(int i = 0; i < (n-1); i++) {
+        int n = conecciones.length();
+        for(int i = 0; i < n; i++) {
             if (conecciones.getData(i).getFuente().equals(node)
                     && !isSettled(conecciones.getData(i).getDestino())) {
                 neighbors.addLast(conecciones.getData(i).getDestino());
@@ -80,6 +85,7 @@ public class AlgoritmoDijkstra {
     }
 
 	private NodoG getMinimum(Set<NodoG> nodos) {
+		System.out.print("Buscando minima distancia");
     	NodoG minimum = null;
         for (NodoG vertex : nodos) {
             if (minimum == null) {
@@ -90,6 +96,8 @@ public class AlgoritmoDijkstra {
                 }
             }
         }
+        System.out.print(".....Se encontró: "+ minimum.getName()+".");
+        System.out.println("");
         return minimum;
     }
 
@@ -107,14 +115,18 @@ public class AlgoritmoDijkstra {
     }
 
     public List<NodoG> getPath(NodoG objetivo) {
+    	System.out.println("Buscando Menor distancia a: "+objetivo.getName());
         List<NodoG> path = new List<NodoG>();
+        //NodoG step = new NodoG(objetivo.getId(),objetivo.getName(),objetivo.getDestino());
         NodoG step = objetivo;
         if (predecessors.get(step) == null) {
             return null;
         }
         path.addLast(step);
+        System.out.println("Buscando en: "+step.getName());
         while (predecessors.get(step) != null) {
             step = predecessors.get(step);
+            System.out.println("Buscando en: "+step.getName());
             path.addLast(step);
         }
         path = path.reverse(path);

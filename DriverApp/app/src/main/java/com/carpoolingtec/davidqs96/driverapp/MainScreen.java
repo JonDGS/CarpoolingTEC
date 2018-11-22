@@ -25,12 +25,15 @@ public class MainScreen extends AppCompatActivity {
     }
 
     public void newTrip(View view){
-        if(singleton.getDriver().isInfoFilled() && singleton.getVehicle().isInfoFilled()) {
+        Intent intent = new Intent(this, NewTripScreen.class);
+        startActivity(intent);
+        /*if(singleton.getDriver().isInfoFilled() && singleton.getVehicle().isInfoFilled()) {
             Intent intent = new Intent(this, NewTripScreen.class);
             startActivity(intent);
         }else{
             Toast.makeText(this, "Primero llene su perfil.", Toast.LENGTH_SHORT).show();
         }
+        */
     }
 
     public void exitApp(View view) {

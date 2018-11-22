@@ -24,7 +24,10 @@ public class NewTripScreen extends AppCompatActivity {
     }
 
     public void startTrip(View view) {
-
+        //Le manda al servidor el inicio y fin de su viaje
+        //Recibe la información del viaje y hace una lista de los caminos
+        //Recibe algunos viajes con respecto a su camino
+        //Solicita el tiempo de duración
         Intent intent = new Intent(this, StartTrip.class);
 
         EditText txtSalida = findViewById(R.id.txtSalida);

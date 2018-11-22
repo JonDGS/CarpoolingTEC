@@ -24,6 +24,7 @@ public class NewTripScreen extends AppCompatActivity {
     }
 
     public void startTrip(View view) {
+
         Intent intent = new Intent(this, StartTrip.class);
 
         EditText txtSalida = findViewById(R.id.txtSalida);

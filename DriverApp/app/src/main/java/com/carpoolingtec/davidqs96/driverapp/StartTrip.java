@@ -21,10 +21,11 @@ public class StartTrip extends AppCompatActivity {
         TextView txtInicio = findViewById(R.id.txtInicio);
         txtInicio.setText(message1);
 
-        TextView txtFin = findViewById(R.id.txtDestino);
+        TextView txtFin = findViewById(R.id.txtFin);
         txtFin.setText(message2);
+    }
 
-
-
+    public void nextPerson(){
+        //Le pide al servidor quien sigue
     }
 }

@@ -6,7 +6,9 @@ public class ServerMainL {
 		Server s = new Server();
 		AlgoritmoDijkstra t = new AlgoritmoDijkstra(s.mapa);
 		t.getClass();
-		//t.getPath(s.mapa.nodos.getData(10)); 
+		t.execute(s.mapa.nodos.getData(10));
+		List<NodoG> path = t.getPath(s.mapa.nodos.getData(20));
+		System.out.println(path.getData(0).getName());
 		
 		System.out.println(s.mapa.nodos.getData(11).getId());
 		

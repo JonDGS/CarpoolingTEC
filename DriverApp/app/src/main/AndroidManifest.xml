@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ProfileScreen" />
-        <activity android:name=".NewTripScreen"></activity>
+        <activity android:name=".NewTripScreen" />
+        <activity android:name=".StartTrip"></activity>
     </application>
 
 </manifest>

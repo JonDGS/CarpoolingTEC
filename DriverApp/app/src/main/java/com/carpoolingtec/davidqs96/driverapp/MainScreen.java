@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class MainScreen extends AppCompatActivity {
-    private Button profileEdit;
     SingletonClass singleton = SingletonClass.getSingleton();
+    private Button profileEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

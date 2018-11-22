@@ -56,7 +56,7 @@
             android:layout_marginStart="28dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="28dp"
-            android:text="Vincular Cuenta"
+            android:text="Información de Vehículo"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
@@ -211,6 +211,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
+            android:onClick="handleLinkedInLogin"
             android:text="Registrarse con LinkedIn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -222,16 +223,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="80dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="60dp"
-            android:paddingTop="10dp"
+            android:onClick="saveProfile"
             android:text="Guardar Perfil"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.517"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tbx_licensePlate" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

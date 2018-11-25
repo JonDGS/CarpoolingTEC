@@ -33,6 +33,7 @@ public class Usuario {
 	public List<Viaje> viajes;
 	private List<Usuario> passangers = new List<Usuario>();
 	private boolean busy = false;
+	private boolean full = false;
 	private String uniqueID;
 	private static int connection = 0;
 	
@@ -72,6 +73,10 @@ public class Usuario {
 	
 	public void addStudent(Usuario user) {
 		passangers.addLast(user);
+		if(passangers.length() >= this.cantEspacios) {
+			this.full = true;
+			this.busy = true;
+		}
 	}
 
 	public String getNombre() {

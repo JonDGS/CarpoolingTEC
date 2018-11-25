@@ -9,6 +9,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
 import com.google.gson.*;
 
+import Server.AlgoritmoDijkstra;
+import Server.NodoG;
 import Server.Usuario;
 //Local import
 import Utils.List;
@@ -79,7 +81,62 @@ public class DriverResource {
 	@Path("/map")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getMap() {
-		return new Gson().toJson(server.getServer().mapa);
+		return new Gson().toJson(server.getServer().mapa.nodos);
+	}
+	
+	@GET
+	@Path("/map/{lookup}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getMap(@PathParam("lookup") String place) {
+		NodoG location = server.searchLocationByName(place);
+		if(location == null) {
+			return "Place not found";
+		}return new Gson().toJson(location);
+	}
+	
+	@GET
+	@Path("/{lookup}/passangers")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getPassangers(@PathParam("lookup") String driver) {
+		Usuario user = server.isDriver(driver);
+		if(user == null) {
+			return "Error";
+		}
+		Server.List<Usuario> passangers = user.getPassangers();
+		if(passangers == null) {
+			return "User has no passangers";
+		}return new Gson().toJson(passangers);
+	}
+	
+	@GET
+	@Path("/timeToDestination")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public String getTime(String locations) {
+		String[] list = locations.split(",");
+		int timeTo = server.getTime(list[0], list[1]);
+		if(timeTo == 0) {
+			return "Error";
+		}return String.valueOf(timeTo);
+	}
+	
+	@GET
+	@Path("/map/path")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public String getPath(String data) {
+		String[] places = data.split(",");
+		NodoG origin = server.searchLocationByName(places[0]);
+		NodoG destination = server.searchLocationByName(places[1]);
+		if((origin == null) || (destination == null)) {
+			return "Error";
+		}
+		AlgoritmoDijkstra manager = new AlgoritmoDijkstra(server.getServer().mapa);
+		manager.execute(origin);
+		Server.List<NodoG> list = manager.getPath(destination);
+		if(list == null) {
+			return "No path";
+		}return new Gson().toJson(list);
 	}
 	
 

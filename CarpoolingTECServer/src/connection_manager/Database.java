@@ -3,8 +3,14 @@ package connection_manager;
 import com.google.gson.Gson;
 
 import Server.Server;
+import Server.AlgoritmoDijkstra;
+import Server.NodoG;
+import Server.Destino;
+import Server.ListDestinosConecciones;
 import Server.Usuario;
-import Utils.List;
+import Server.List;
+
+//String converter import
 
 public class Database {
 	
@@ -86,14 +92,12 @@ public class Database {
 	}
 	
 	public String assignDriver(String id) {
-		Usuario passanger = new Gson().fromJson(id, Usuario.class);
-		int index = 0;
-		while(index<drivers.length()) {
-			if(drivers.getData(index).isBusy() == false) {
-				drivers.getData(index).setNewPassanger(passanger);
-				return "A driver has been assigned";
-			}
-		}return "No driver is able to pick you up";
+		Usuario passanger = isStudent(id);
+		Usuario driver = isDriverFree();
+		if(driver == null) {
+			return "No driver is available";
+		}driver.addStudent(passanger);
+		return "Your assigned driver is " + driver.getNombre();
 	}
 	
 	public Usuario isDriver(String driver) {
@@ -114,6 +118,60 @@ public class Database {
 				return result;
 			}index++;
 		}return null;
+	}
+	
+	public Server getServer() {
+		return this.server;
+	}
+	
+	public NodoG searchLocationByName(String name) {
+		int index = 0;
+		NodoG result = null;
+		while(index < server.mapa.getNodos().length()) {
+			if(server.mapa.getNodos().getData(index).getName().equals(name)) {
+				result = server.mapa.getNodos().getData(index);
+				return result;
+			}index++;
+		}return null;
+	}
+	
+	public List<NodoG> getPath(String start, String finish){
+		AlgoritmoDijkstra manager = new AlgoritmoDijkstra(server.mapa);
+		NodoG source = searchLocationByName(start);
+		if(source == null) {
+			return null;
+		}
+		manager.execute(source);
+		List<NodoG> path = manager.getPath(searchLocationByName(finish));
+		if(path == null) {
+			return null;
+		}return path;
+	}
+	
+	public List<Usuario> getMyPassangers(String myName){
+		List<Usuario> passangers = isDriver(myName).getPassangers();
+		if(passangers == null) {
+			return null;
+		}return passangers;
+	}
+	
+	public String getJsonPath(String start, String finish) {
+		List<NodoG> path = getPath(start, finish);
+		if(path == null) {
+			return "Error al calcular ruta";
+		}
+		return new Gson().toJson(path);
+	}
+	
+	public int getTime(String start, String finish) {
+		AlgoritmoDijkstra manager = new AlgoritmoDijkstra(server.mapa);
+		NodoG source = searchLocationByName(start);
+		NodoG destination = searchLocationByName(finish);
+		if((source == null) || (destination == null)) {
+			return 0;
+		}
+		manager.execute(source);
+		return manager.getDistance(source, destination);
 	}
 
 }

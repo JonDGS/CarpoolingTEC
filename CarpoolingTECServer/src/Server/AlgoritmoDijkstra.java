@@ -61,7 +61,7 @@ public class AlgoritmoDijkstra {
         }
     }
 
-    private int getDistance(NodoG nodo, NodoG objetivo) {
+    public int getDistance(NodoG nodo, NodoG objetivo) {
     	int n = conecciones.length();
     	for(int i = 0; i < n; i++) {
             if (conecciones.getData(i).getFuente().equals(nodo)

@@ -28,4 +28,13 @@ public class StartTrip extends AppCompatActivity {
     public void nextPerson(){
         //Le pide al servidor quien sigue
     }
+
+    public void endTrip(){
+        //Termina el viaje
+    }
+
+    public void timeTrip(){
+        //Le pide al servidor el tiempo que va a durar
+        //Muestra el tiempo en pantalla
+    }
 }

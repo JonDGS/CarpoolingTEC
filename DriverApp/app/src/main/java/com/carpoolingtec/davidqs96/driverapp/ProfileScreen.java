@@ -11,12 +11,17 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookActivity;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -43,6 +48,9 @@ public class ProfileScreen extends AppCompatActivity {
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private AccessToken accessToken;
+    private ProfileTracker profileTracker;
 
     private EditText name;
     private EditText surname;
@@ -81,6 +89,30 @@ public class ProfileScreen extends AppCompatActivity {
 
         loginButton = (LoginButton) findViewById(R.id.btn_signInFacebook);
         callbackManager = CallbackManager.Factory.create();
+
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+                // Set the access token using
+                // currentAccessToken when it's loaded or set.
+            }
+        };
+        // If the access token is available already assign it.
+        accessToken = AccessToken.getCurrentAccessToken();
+
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(
+                    Profile oldProfile,
+                    Profile currentProfile) {
+            }
+        };
+
+        accessTokenTracker.startTracking();
+        profileTracker.startTracking();
+
         loginWithFacebook();
 
     }
@@ -160,7 +192,7 @@ public class ProfileScreen extends AppCompatActivity {
                     surname.setText(driver.getSurname());
 
                     driver.checkInfoFilled();
-                    driver.setRegisteredWithLinkedIn(true);
+                    driver.setRegisteredWith("LinkedIn");
 
                 } catch (JSONException e){
                     e.printStackTrace();
@@ -181,26 +213,33 @@ public class ProfileScreen extends AppCompatActivity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        driver.setName(jsonObject.getString("firstName"));
-                        name = (EditText) findViewById(R.id.tbx_name);
-                        name.setText(driver.getName());
+                        //Toast.makeText(getApplicationContext(), "Se registró con éxito.", Toast.LENGTH_SHORT).show();
+                        Profile profile = Profile.getCurrentProfile();
 
-                        driver.setSurname(jsonObject.getString("lastName"));
-                        surname = (EditText) findViewById(R.id.tbx_surname);
-                        surname.setText(driver.getSurname());
+                        if (profile != null){
+                            Toast.makeText(getApplicationContext(), "nombre " + profile.getFirstName().toString(), Toast.LENGTH_SHORT).show();
+                            driver.setName(profile.getFirstName().toString());
+                            name = (EditText) findViewById(R.id.tbx_name);
+                            name.setText(driver.getName());
 
-                        driver.checkInfoFilled();
-                        driver.setRegisteredWithLinkedIn(true);
+                            driver.setSurname(profile.getLastName().toString());
+                            surname = (EditText) findViewById(R.id.tbx_surname);
+                            surname.setText(driver.getSurname());
+
+                            driver.checkInfoFilled();
+                            driver.setRegisteredWith("Facebook");
+                        }
                     }
 
                     @Override
                     public void onCancel() {
-                        // App code
+                        Toast.makeText(getApplicationContext(), "Login cancelado.", Toast.LENGTH_SHORT).show();
+                        LoginManager.getInstance().logOut();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
-                        // App code
+                        Toast.makeText(getApplicationContext(), "Se dió un error durante el login.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -211,4 +250,12 @@ public class ProfileScreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    protected void onDestroy() {
+        LoginManager.getInstance().logOut();
+        accessTokenTracker.stopTracking();
+        profileTracker.stopTracking();
+
+        super.onDestroy();
+    }
 }

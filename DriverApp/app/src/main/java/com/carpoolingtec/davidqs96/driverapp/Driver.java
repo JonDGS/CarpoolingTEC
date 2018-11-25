@@ -10,18 +10,18 @@ class Driver {
     private String id = "";
     private String placeResidence = "";
     private boolean infoFilled = false;
-    private boolean registeredWithLinkedIn = false;
+    private String registeredWith = "none";
 
     public Driver() {
         checkInfoFilled();
     }
 
-    public boolean isRegisteredWithLinkedIn() {
-        return registeredWithLinkedIn;
+    public String getRegisteredWith() {
+        return registeredWith;
     }
 
-    public void setRegisteredWithLinkedIn(boolean registeredWithLinkedIn) {
-        this.registeredWithLinkedIn = registeredWithLinkedIn;
+    public void setRegisteredWith(String registeredWith) {
+        this.registeredWith = registeredWith;
     }
 
     public boolean isInfoFilled() {

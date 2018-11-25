@@ -10,7 +10,8 @@ public class NewTripScreen extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE1 = "com.carpoolingtec.davidqs96.driverapp.MESSAGE1";
     public static final String EXTRA_MESSAGE2 = "com.carpoolingtec.davidqs96.driverapp.MESSAGE2";
-
+    EditText txtSalida;
+    EditText txtDestino;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +20,7 @@ public class NewTripScreen extends AppCompatActivity {
     }
 
     public void cancelTrip(View view) {
-        Intent intent = new Intent(this, MainScreen.class);
-        startActivity(intent);
+        finish();
     }
 
     public void startTrip(View view) {
@@ -30,11 +30,11 @@ public class NewTripScreen extends AppCompatActivity {
         //Solicita el tiempo de duración
         Intent intent = new Intent(this, StartTrip.class);
 
-        EditText txtSalida = findViewById(R.id.txtSalida);
+        txtSalida = findViewById(R.id.txtSalida);
         String ptoSalida = txtSalida.getText().toString();
         intent.putExtra(EXTRA_MESSAGE1, ptoSalida);
 
-        EditText txtDestino = findViewById(R.id.txtDestino);
+        txtDestino = findViewById(R.id.txtDestino);
         String ptoDestino = txtDestino.getText().toString();
         intent.putExtra(EXTRA_MESSAGE2, ptoDestino);
 

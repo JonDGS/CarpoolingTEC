@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DriverApp</string>
+    <string name = "facebook_app_id">330724970857278</string>
 </resources>

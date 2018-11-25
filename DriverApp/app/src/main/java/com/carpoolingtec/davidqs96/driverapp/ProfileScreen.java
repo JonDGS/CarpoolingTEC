@@ -12,6 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookActivity;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.errors.LIApiError;
@@ -33,6 +41,9 @@ public class ProfileScreen extends AppCompatActivity {
     private Driver driver = singleton.getDriver();
     private Vehicle vehicle = singleton.getVehicle();
 
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
+
     private EditText name;
     private EditText surname;
     private EditText id;
@@ -44,6 +55,7 @@ public class ProfileScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_profile_screen);
 
         name = (EditText) findViewById(R.id.tbx_name);
@@ -67,7 +79,10 @@ public class ProfileScreen extends AppCompatActivity {
         licensePlate = (EditText) findViewById(R.id.tbx_licensePlate);
         licensePlate.setText(vehicle.getLicensePlate());
 
-        //getPackageHash();
+        loginButton = (LoginButton) findViewById(R.id.btn_signInFacebook);
+        callbackManager = CallbackManager.Factory.create();
+        loginWithFacebook();
+
     }
 
     public void saveProfile(View view){
@@ -85,13 +100,19 @@ public class ProfileScreen extends AppCompatActivity {
         finish();
     }
 
+    public void openBarcodeReader(View view){
+        Intent intent = new Intent(this, BarcodeReaderScreen.class);
+        startActivity(intent);
+
+    }
+
     public void handleLinkedInLogin(View view){
         LISessionManager.getInstance(getApplicationContext()).init(this, buildScope(), new AuthListener() {
             @Override
             public void onAuthSuccess() {
                 // Authentication was successful.  You can now do
                 // other calls with the SDK.
-                fetchPersonalInfo();
+                fetchPersonalInfoLinkedIn();
             }
 
             @Override
@@ -111,13 +132,13 @@ public class ProfileScreen extends AppCompatActivity {
         LISessionManager.getInstance(getApplicationContext()).clearSession();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Add this line to your existing onActivityResult() method
-        LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        // Add this line to your existing onActivityResult() method
+//        LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+//    }
 
-    private void fetchPersonalInfo(){
+    private void fetchPersonalInfoLinkedIn(){
         String url = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name)";
 
         APIHelper apiHelper = APIHelper.getInstance(getApplicationContext());
@@ -139,7 +160,7 @@ public class ProfileScreen extends AppCompatActivity {
                     surname.setText(driver.getSurname());
 
                     driver.checkInfoFilled();
-                    driver.isRegisteredWithLinkedIn() = true;
+                    driver.setRegisteredWithLinkedIn(true);
 
                 } catch (JSONException e){
                     e.printStackTrace();
@@ -152,6 +173,42 @@ public class ProfileScreen extends AppCompatActivity {
                 Log.e("ProfileScreen", liApiError.getMessage());
             }
         });
+    }
+
+
+    private void loginWithFacebook(){
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        driver.setName(jsonObject.getString("firstName"));
+                        name = (EditText) findViewById(R.id.tbx_name);
+                        name.setText(driver.getName());
+
+                        driver.setSurname(jsonObject.getString("lastName"));
+                        surname = (EditText) findViewById(R.id.tbx_surname);
+                        surname.setText(driver.getSurname());
+
+                        driver.checkInfoFilled();
+                        driver.setRegisteredWithLinkedIn(true);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

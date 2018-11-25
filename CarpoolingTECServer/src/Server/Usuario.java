@@ -1,5 +1,11 @@
 package Server;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import javax.xml.bind.DatatypeConverter;
+
 /*
  * Clase que sirve para hacer una base de datos de las
  * personas que esten usando el app
@@ -17,6 +23,7 @@ public class Usuario {
 	 * @param cantidadViajes: sirve para hacer el top 5 de estudiantes
 	 * con más viajes
 	 * @param viajes: un historial de los viajes realizados
+	 * @param busy: boolean que dicta si un usuario esta ocupado o no
 	 */
 	public String nombre;
 	public int carne;
@@ -25,12 +32,42 @@ public class Usuario {
 	public int cantidadViajes;
 	public List<Viaje> viajes;
 	private List<Usuario> passangers = new List<Usuario>();
+	private boolean busy = false;
+	private String uniqueID;
+	private static int connection = 0;
 	
-	public Usuario(String nombre, int carne, int tipo) {
+	public Usuario(String nombre, int carne, int tipo, int cantEspacios) {
 		this.nombre = nombre;
 		this.carne = carne;
 		this.tipo = tipo;
+		this.cantEspacios = cantEspacios;
+		String identifier = "connection " + String.valueOf(connection);
+		try {
+			this.uniqueID = DatatypeConverter.printHexBinary( 
+			           MessageDigest.getInstance("SHA-256").digest(identifier.getBytes("UTF-8")));
+			connection++;
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		};
 		
+	}
+	
+	public List<Usuario> getPassangers(){
+		return this.passangers;
+	}
+	
+	public String getUniqueID() {
+		return this.uniqueID;
+	}
+	
+	public void setBusy(boolean busy) {
+		this.busy = busy;
+	}
+	
+	public boolean isBusy() {
+		return busy;
 	}
 	
 	public void addStudent(Usuario user) {

@@ -65,4 +65,19 @@ private Database server = new Database();
 		return new Gson().toJson(result);
 	}
 	
+	@GET
+	@Path("/findDriver")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public String findDriver(String id) {
+		return server.assignDriver(id);
+	}
+	
+	@GET
+	@Path("/map")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getMap() {
+		return new Gson().toJson(server.getServer().mapa);
+	}
+	
 }

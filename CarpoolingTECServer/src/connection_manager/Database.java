@@ -6,6 +6,8 @@ import Server.Server;
 import Server.Usuario;
 import Utils.List;
 
+//String converter import
+
 public class Database {
 	
 	private static List<Usuario> drivers = new List<Usuario>();
@@ -86,14 +88,13 @@ public class Database {
 	}
 	
 	public String assignDriver(String id) {
-		Usuario passanger = new Gson().fromJson(id, Usuario.class);
-		int index = 0;
-		while(index<drivers.length()) {
-			if(drivers.getData(index).isBusy() == false) {
-				drivers.getData(index).setNewPassanger(passanger);
-				return "A driver has been assigned";
-			}
-		}return "No driver is able to pick you up";
+		Usuario passanger = isStudent(id);
+		Usuario driver = isDriverFree();
+		if(driver == null) {
+			return "No driver is available";
+		}driver.addStudent(passanger);
+		driver.setBusy(true);
+		return "Your assigned driver is " + driver.getNombre();
 	}
 	
 	public Usuario isDriver(String driver) {
@@ -114,6 +115,10 @@ public class Database {
 				return result;
 			}index++;
 		}return null;
+	}
+	
+	public Server getServer() {
+		return this.server;
 	}
 
 }

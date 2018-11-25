@@ -27,7 +27,7 @@ public class DriverResource {
 		String param1 = metadata[0];
 		String param2 = metadata[1];
 		String param3 = metadata[2];
-		String param4 = metadata[4];
+		String param4 = metadata[3];
 		Usuario data = new Usuario(param1, Integer.parseInt(param2), Integer.parseInt(param3), Integer.parseInt(param4));
 		server.addDriver(data);
 		return "Log in successfully";
@@ -54,6 +54,17 @@ public class DriverResource {
 	}
 	
 	@GET
+	@Path("/{lookup}/passangers")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getMyPassengers(@PathParam("lookup") String lookup) {
+		Usuario result = server.isDriver(lookup);
+		if(result == (null)) {
+			return "Driver not found";
+		}
+		return new Gson().toJson(result.getPassangers());
+	}
+	
+	@GET
 	@Path("/carnet/{lookup}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getCarne(@PathParam("lookup") String lookup) {
@@ -62,6 +73,13 @@ public class DriverResource {
 			return "Driver not found";
 		}
 		return new Gson().toJson(result);
+	}
+	
+	@GET
+	@Path("/map")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getMap() {
+		return new Gson().toJson(server.getServer().mapa);
 	}
 	
 

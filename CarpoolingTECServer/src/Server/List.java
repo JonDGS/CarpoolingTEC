@@ -83,6 +83,9 @@ public class List<T> {
 	public int length() {
 		Nodo<T> temp = first;
 		int i = 1;
+		if (temp == null) {
+			return 0;
+		}
 		while(temp.next != null) {
 			temp = temp.next;
 			i++;

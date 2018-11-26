@@ -75,7 +75,7 @@ public class ListDestinosConecciones {
 		conecciones.addLast(aa);conecciones.addLast(ab);conecciones.addLast(ac);conecciones.addLast(ad);conecciones.addLast(ae);
 		conecciones.addLast(af);conecciones.addLast(ag);conecciones.addLast(ah);conecciones.addLast(ai);conecciones.addLast(aj);
 		//conecciones fijas : San Jose
-		Coneccion ak = new Coneccion("ak", nodo.getData(14),nodo.getData(11),ranNum());
+		Coneccion ak = new Coneccion("ak", nodo.getData(13),nodo.getData(11),ranNum());
 		Coneccion al = new Coneccion("al", nodo.getData(11),nodo.getData(10),ranNum());
 		Coneccion am = new Coneccion("am", nodo.getData(11),nodo.getData(15),ranNum());
 		Coneccion an = new Coneccion("an", nodo.getData(15),nodo.getData(10),ranNum());
@@ -115,7 +115,23 @@ public class ListDestinosConecciones {
 		Coneccion bk = new Coneccion("bk", nodo.getData(18),nodo.getData(26),ranNum());
 		conecciones.addLast(bj);conecciones.addLast(bk);
 		
-		//Conecciones aleatorias
+		//Conecciones 
+		//Coneccion bl = 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		return conecciones;

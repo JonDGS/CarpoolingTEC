@@ -135,7 +135,7 @@ public class AlgoritmoDijkstra {
     public int getDistTotal(List<NodoG> list) {
     	list = list.reverse(list);
     	list.print(list);
-    	int n = list.length() - 1;
+    	int n = list.length()-1;
     	int tot = 0;
     	for(int i = 0; i < n; i++) {
     		tot = tot + getDistance(list.getData(i), list.getData(i+1));

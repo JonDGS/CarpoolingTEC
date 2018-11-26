@@ -117,8 +117,20 @@ public class List<T> {
 
 	public List<T> reverse(List<T> list) {
 		List<T> newlist = new List<T>();
-		newlist.addLast(list.first.data);
-		return list;
+		for(int i = list.length() - 1; i > 0; i--) {
+			newlist.addLast(list.getData(i));
+		}
+		return newlist;
+	}
+
+	public void print(List<NodoG> list) {
+		System.out.println("  ");
+		int n = list.length();
+		for (int i = 0; i < n;i++) {
+			System.out.print(list.getData(i).getName()+", ");
+			
+		}
+		System.out.println("  ");
 	}
 		
 }

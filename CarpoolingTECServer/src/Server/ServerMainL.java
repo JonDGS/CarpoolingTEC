@@ -14,6 +14,7 @@ public class ServerMainL {
 		
 		System.out.print(s.mapa.conecciones.getData(5).getFuente()+" a ");
 		System.out.print(s.mapa.conecciones.getData(5).getDestino());
+		System.out.print("Distancia total: "+t.getDistTotal(path));
 	}
 
 }

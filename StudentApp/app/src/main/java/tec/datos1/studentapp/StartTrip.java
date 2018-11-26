@@ -34,6 +34,8 @@ public class StartTrip extends AppCompatActivity {
 
     public void endTrip(View view){
         //Termina el viaje
+        Intent intent = new Intent(this, ReviewScreen.class);
+        startActivity(intent);
     }
 
     public void timeTrip(View view){

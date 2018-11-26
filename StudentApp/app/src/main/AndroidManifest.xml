@@ -22,7 +22,8 @@
         <activity android:name=".MainScreen" />
         <activity android:name=".ProfileScreen" />
         <activity android:name=".NewTripScreen" />
-        <activity android:name=".StartTrip"></activity>
+        <activity android:name=".StartTrip" />
+        <activity android:name=".ReviewScreen"></activity>
     </application>
 
 </manifest>

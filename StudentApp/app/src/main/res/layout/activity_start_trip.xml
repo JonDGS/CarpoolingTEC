@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:layout_marginBottom="20dp"
+        android:onClick="yaRecogio"
         android:text="Siguiente"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintStart_toEndOf="@+id/button3" />
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="56dp"
+        android:onClick="endTrip"
         android:text="Fin Viaje"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -53,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="34dp"
         android:layout_marginBottom="56dp"
+        android:onClick="timeTrip"
         android:text="Recalcular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

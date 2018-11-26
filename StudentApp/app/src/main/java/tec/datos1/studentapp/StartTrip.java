@@ -3,6 +3,7 @@ package tec.datos1.studentapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import tec.datos1.studentapp.R;
@@ -27,15 +28,15 @@ public class StartTrip extends AppCompatActivity {
         txtFin.setText(message2);
     }
 
-    public void yaRecogio(){
+    public void yaRecogio(View view){
         //Le pide al servidor quien sigue
     }
 
-    public void endTrip(){
+    public void endTrip(View view){
         //Termina el viaje
     }
 
-    public void timeTrip(){
+    public void timeTrip(View view){
         //Le pide al servidor el tiempo que va a durar
         //Muestra el tiempo en pantalla
     }

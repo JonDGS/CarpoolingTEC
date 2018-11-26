@@ -28,6 +28,8 @@ public class AlgoritmoDijkstra {
 
     public void execute(NodoG source) {
     	System.out.println("---------------AlgoritmoDijkstra---------------");
+    	//Cerrar Rutas
+    	CerrarRuta(15);
     	System.out.println("----El inicio del recorrido sera: "+source.getName()+"-----");
     	System.out.println("Estableciendo lo necesario para conseguir la menor distancia");
         settledNodes = new HashSet<NodoG>();
@@ -47,7 +49,7 @@ public class AlgoritmoDijkstra {
         System.out.println("---------------AlgoritmoDijkstra---------------");
     }
 
-    private void findMinimalDistances(NodoG node) {
+	private void findMinimalDistances(NodoG node) {
         List<NodoG> adjacentNodes = getNeighbors(node);
         int n = adjacentNodes.length();
         for(int i = 0; i < n; i++) {
@@ -123,10 +125,9 @@ public class AlgoritmoDijkstra {
             return null;
         }
         path.addLast(step);
-        System.out.println("Buscando en: "+step.getName());
         while (predecessors.get(step) != null) {
             step = predecessors.get(step);
-            System.out.println("Buscando en: "+step.getName());
+            System.out.println("Pasar por: "+step.getName());
             path.addLast(step);
         }
         return path;
@@ -142,5 +143,26 @@ public class AlgoritmoDijkstra {
     	}
     	return tot;
     }
-    
+
+    private void CerrarRuta(int port) {
+    	int ranNum = (int) (Math.random() * 100) + 1;
+		if (ranNum < port) {
+			System.out.println("---------------RUTA CERRADA-----------------");
+			int RR = rutaRandom();
+			System.out.println("---Se Cerró Ruta de "+conecciones.getData(RR).getFuente()+ " a "+ conecciones.getData(RR).getDestino()+ "--");
+			System.out.println("-----Favor Tomar Ruatas Alternas------------");
+			System.out.println("--------------------------------------------");
+			conecciones.deleteData(RR);
+		}
+	}
+
+	private int rutaRandom() {
+		List<Integer> i = new List<Integer>();
+		i.addLast(2);i.addLast(34);i.addLast(39);i.addLast(40);
+		i.addLast(41);i.addLast(42);i.addLast(43);i.addLast(44);
+		int n = i.length()-1;
+		int ranNum = (int) (Math.random() * n);
+		return i.getData(ranNum);
+	}
+
 }

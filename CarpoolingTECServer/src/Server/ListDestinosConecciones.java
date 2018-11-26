@@ -5,6 +5,8 @@ package Server;
  * 
  */
 
+import static org.junit.jupiter.api.Assumptions.assumingThat;
+
 public class ListDestinosConecciones {
 	
 	
@@ -71,7 +73,7 @@ public class ListDestinosConecciones {
 		Coneccion ag = new Coneccion("ag", nodo.getData(7),nodo.getData(8),ranNum());
 		Coneccion ah = new Coneccion("ah", nodo.getData(8),nodo.getData(1),ranNum());
 		Coneccion ai = new Coneccion("ai", nodo.getData(1),nodo.getData(3),ranNum());
-		Coneccion aj = new Coneccion("aj", nodo.getData(1),nodo.getData(0),ranNum());
+		Coneccion aj = new Coneccion("aj", nodo.getData(1),nodo.getData(0),ranNum()); //10
 		conecciones.addLast(aa);conecciones.addLast(ab);conecciones.addLast(ac);conecciones.addLast(ad);conecciones.addLast(ae);
 		conecciones.addLast(af);conecciones.addLast(ag);conecciones.addLast(ah);conecciones.addLast(ai);conecciones.addLast(aj);
 		//conecciones fijas : San Jose
@@ -86,7 +88,7 @@ public class ListDestinosConecciones {
 		Coneccion as = new Coneccion("as", nodo.getData(19),nodo.getData(17),ranNum());
 		Coneccion at = new Coneccion("at", nodo.getData(19),nodo.getData(10),ranNum());
 		Coneccion au = new Coneccion("au", nodo.getData(18),nodo.getData(19),ranNum());
-		Coneccion av = new Coneccion("av", nodo.getData(16),nodo.getData(18),ranNum());
+		Coneccion av = new Coneccion("av", nodo.getData(16),nodo.getData(18),ranNum()); //12
 		conecciones.addLast(ak);conecciones.addLast(al);conecciones.addLast(am);conecciones.addLast(an);conecciones.addLast(ao);
 		conecciones.addLast(ap);conecciones.addLast(aq);conecciones.addLast(ar);conecciones.addLast(as);conecciones.addLast(at);
 		conecciones.addLast(au);conecciones.addLast(av);
@@ -101,7 +103,7 @@ public class ListDestinosConecciones {
 		Coneccion bd = new Coneccion("bd", nodo.getData(29),nodo.getData(21),ranNum());
 		Coneccion be = new Coneccion("be", nodo.getData(29),nodo.getData(20),ranNum());
 		Coneccion bf = new Coneccion("bf", nodo.getData(23),nodo.getData(20),ranNum());
-		Coneccion bg = new Coneccion("bg", nodo.getData(24),nodo.getData(23),ranNum());
+		Coneccion bg = new Coneccion("bg", nodo.getData(24),nodo.getData(23),ranNum());//11
 		conecciones.addLast(aw);conecciones.addLast(ax);conecciones.addLast(ay);conecciones.addLast(az);conecciones.addLast(ba);
 		conecciones.addLast(bb);conecciones.addLast(bc);conecciones.addLast(bd);conecciones.addLast(be);conecciones.addLast(bf);
 		conecciones.addLast(bg);
@@ -116,23 +118,31 @@ public class ListDestinosConecciones {
 		conecciones.addLast(bj);conecciones.addLast(bk);
 		
 		//Conecciones 
-		//Coneccion bl = 
 		
+		List<Integer> AC = nl(0,2,3,4);
+		Coneccion bl = new Coneccion("bl",nodo.getData(1),nodo.getData(rn(AC)),ranNum());
+		Coneccion bm = new Coneccion("bm",nodo.getData(1),nodo.getData(rn(AC)),ranNum());
+		Coneccion bn = new Coneccion("bn",nodo.getData(1),nodo.getData(rn(AC)),ranNum());
+		 AC = nl(0,2,7,8);
+		Coneccion bo = new Coneccion("bo",nodo.getData(rn(AC)),nodo.getData(1),ranNum());
+		Coneccion bp = new Coneccion("bp",nodo.getData(rn(AC)),nodo.getData(1),ranNum());
+		conecciones.addLast(bl);conecciones.addLast(bm);conecciones.addLast(bn);conecciones.addLast(bo);conecciones.addLast(bp);
+		List<Integer> SC = nl(19,17,15,11);
+		Coneccion bq = new Coneccion("bq",nodo.getData(10),nodo.getData(rn(SC)),ranNum());
+		Coneccion br = new Coneccion("br",nodo.getData(10),nodo.getData(rn(SC)),ranNum());
+		Coneccion bs = new Coneccion("bs",nodo.getData(10),nodo.getData(rn(SC)),ranNum());
+		SC = nl(19,17,15,11);
+		Coneccion bt = new Coneccion("bt",nodo.getData(rn(SC)),nodo.getData(10),ranNum());
+		Coneccion bu = new Coneccion("bu",nodo.getData(rn(SC)),nodo.getData(10),ranNum());
+		Coneccion bv = new Coneccion("bv",nodo.getData(rn(SC)),nodo.getData(10),ranNum());
+		conecciones.addLast(bq);conecciones.addLast(bs);conecciones.addLast(bt);conecciones.addLast(bu);conecciones.addLast(bv);
+		conecciones.addLast(br);
+		List<Integer> AL = nl(11,12,17,13);
+		Coneccion bw = new Coneccion("bw",nodo.getData(10),nodo.getData(rn(AL)),ranNum());conecciones.addLast(bw);
+		Coneccion bx = new Coneccion("bx",nodo.getData(10),nodo.getData(rn(AL)),ranNum());conecciones.addLast(bx);
+		Coneccion by = new Coneccion("by",nodo.getData(10),nodo.getData(rn(AL)),ranNum());conecciones.addLast(by);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 		return conecciones;
 	}
@@ -143,5 +153,18 @@ public class ListDestinosConecciones {
 			return 5;
 		}
 		return ranNum;
+	}
+	
+	private int rn(List<Integer> list) {
+		int n = list.length()-1;
+		int ranNum = (int) (Math.random() * n);
+		int t = list.getData(ranNum);
+		list.deleteData(ranNum);
+		return t;
+	}
+	private List<Integer> nl(int i, int j, int x, int y){
+		List<Integer> k = new List<Integer>();
+		k.addLast(i);k.addLast(j);k.addLast(x);k.addLast(y);
+		return k;
 	}
 }
